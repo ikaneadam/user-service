@@ -1,0 +1,16 @@
+spring:
+
+  datasource:
+    url: jdbc:postgresql://userdatabase.cb7b9zxsfvrk.us-east-1.rds.amazonaws.com/userservice
+    username: postgres
+    password: user_service_wachtwoord
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        connection:
+          charSet: UTF-8

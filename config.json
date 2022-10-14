@@ -1,0 +1,7 @@
+{
+  "auths":{
+    "registry.devops-labs.it/students/devops32/user-service":{
+      "auth":"TOKEN"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+spring:
+  server:
+    port: 9080
+  application:
+    name: user-service
+  profiles:
+    active: staging
+
+
+#
+#  spring.datasource.url = jdbc:postgresql://localhost:5433/bank
+#spring.datasource.username=postgres
+#spring.datasource.password=001
+#spring.jpa.show-sql=true
+#
+#spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.PostgreSQLDialect
+#spring.jpa.hibernate.ddl-auto= update
+

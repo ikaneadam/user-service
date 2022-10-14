@@ -1,0 +1,41 @@
+def get_kubernetes_student_cloud() {
+    def cloudName
+    withFolderProperties {
+        cloudName = env.CLOUD_ENV
+    }
+    return cloudName
+}
+
+pipeline {
+    agent {
+        kubernetes {
+            cloud get_kubernetes_student_cloud()
+            yamlFile 'agents/jenkins-kaniko-agent.yaml'
+        }
+    }
+    stages {
+    stage("Build Application") {
+                steps {
+                    sh 'echo "Building the application"'
+                    container (name: 'maven') {
+                        sh 'mvn clean verify'
+                    }
+                    archiveArtifacts artifacts: 'target/user-service-0.0.1-SNAPSHOT.jar'
+                }
+            }
+        stage('Code Analysis') {
+           steps {
+               withSonarQubeEnv(installationName: 'sonarQube-devops', credentialsId: 'sonarqube') {
+                   container('maven') {
+                       sh 'mvn sonar:sonar -Dsonar.branch.name=$BRANCH_NAME \
+                       -Dsonar.projectKey=devops32-user-service \
+                       -Dsonar.host.url=https://sonarqube.devops-labs.it \
+                       -Dsonar.login=68f954b2bea38dc36c3aaa5e1204337f7d7aedcc'
+                   }
+               }
+           }
+        }
+    }
+}
+
+
